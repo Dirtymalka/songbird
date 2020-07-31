@@ -1,0 +1,23 @@
+.question-block {
+  background-color: #303030;
+  display: flex;
+  padding: 1rem;
+  margin-bottom: 25px;
+  img {
+    width: 200px;
+    height: 155px;
+    border-radius: 10px;
+    margin: 0;
+  }
+  div {
+    width: calc(100% - 240px);
+    margin: 0;
+    .list-group {
+      margin-left: 40px;
+      .list-group-item {
+        background-color: #303030;
+        border: 1px solid #555;
+      }
+    }
+  }
+}

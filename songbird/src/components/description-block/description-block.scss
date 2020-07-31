@@ -1,0 +1,44 @@
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.bird-card {
+  display: flex;
+  padding: 1rem;
+  border: 1px solid #444;
+  width: 100%;
+  position: relative;
+  flex-direction: column;
+  min-width: 0;
+  background-color: #303030;
+  background-clip: border-box;
+  border-radius: 0.25rem;
+  height: 100%;
+  .card-body {
+    display: flex;
+    flex: 1 1 auto;
+    padding: 0;
+    flex-direction: row;
+    min-height: 173px;
+    .bird-img {
+      width: 200px;
+      height: 155px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-right: 2rem;
+    }
+    .list-group {
+      width: calc(100% - 240px);
+      li {
+        position: relative;
+        display: block;
+        padding: 0.75rem 1.25rem;
+        background-color: #303030;
+        border: 1px solid #444;
+      }
+    }
+  }
+}
