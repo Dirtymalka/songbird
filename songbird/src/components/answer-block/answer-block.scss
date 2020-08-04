@@ -21,5 +21,10 @@
         background-color: #d62c1a;
       }
     }
+    &.success {
+      .li-btn {
+        background-color: #00bc8c;
+      }
+    }
   }
 }
