@@ -21,5 +21,8 @@ body {
     color: #fff !important;
     cursor: auto;
     transition: 0.3s;
+    &.btn-next {
+      background-color: #00bc8c;
+    }
   }
 }

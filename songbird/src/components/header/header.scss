@@ -23,6 +23,11 @@
     li {
       flex: auto;
       text-align: center;
+      &.active {
+        span {
+          background-color: #00bc8c;
+        }
+      }
       span {
         background-color: #008966;
         border-color: #007c5d;
@@ -32,7 +37,6 @@
         margin-left: 0;
         line-height: 1.25;
         color: #fff;
-        background-color: #00bc8c;
         border: 0 solid transparent;
       }
     }

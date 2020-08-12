@@ -5,6 +5,23 @@ import BIRDS_DATA from '../../constants/dataBird';
 
 export default class QuestionBlock extends React.Component {
 
+  audioSrc = BIRDS_DATA[this.props.round][this.props.dataIndex].audio;
+  audioElement = <audio controls>
+    <source src={this.audioSrc} type="audio/mpeg" />
+  </audio>;
+
+  componentDidUpdate() {
+    const audioSrc = BIRDS_DATA[this.props.round][this.props.dataIndex].audio;
+    const audioElement = <audio controls>
+      <source src={audioSrc} type="audio/mpeg" />
+    </audio>;
+    if (this.props.nextRound) {
+      this.audioElement = <audio controls>
+        <source src={this.audioSrc} type="audio/mpeg" />
+      </audio>;
+    }
+  }
+
   render() {
     const {
       round,
@@ -13,6 +30,11 @@ export default class QuestionBlock extends React.Component {
     } = this.props;
 
     console.log(this.props)
+
+    const audioSrc = BIRDS_DATA[round][dataIndex].audio;
+    // const audioElement = <audio controls>
+    //   <source src={audioSrc} type="audio/mpeg" />
+    // </audio>;
 
     return (
       <div className="question-block">
@@ -25,9 +47,7 @@ export default class QuestionBlock extends React.Component {
             <li className="list-group-item">
               {/* <div className="audio-player"></div> */}
               {/* <audio src={BIRDS_DATA[0].audio}></audio> */}
-              <audio controls>
-                <source src={BIRDS_DATA[round][dataIndex].audio} type="audio/mpeg" />
-              </audio>
+              {this.audioElement}
             </li>
           </ul>
         </div>

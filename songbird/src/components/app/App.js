@@ -3,6 +3,7 @@ import Header from '../header/header';
 import QuestionBlock from '../question-block/question-block';
 import AnswersBlock from '../answer-block/answer-block';
 import DescriptionBlock from '../description-block/description-block';
+import GameOver from '../game-over/game-over';
 import { randomInteger } from '../../utils/utils';
 import './app.scss';
 
@@ -12,6 +13,9 @@ export default class App extends Component {
     dataIndex: randomInteger(0, 5),
     isGuessed: false,
     clickedIndexBird: null,
+    score: 0,
+    nextRound: false,
+    gameOver: false,
   }
 
   birdClickHandler = (id) => {
@@ -25,35 +29,101 @@ export default class App extends Component {
     this.setState({ clickedIndexBird: id - 1 })
   }
 
+  updateScore = (newScore) => {
+    this.setState({ score: newScore });
+  }
+
+  nextRoundHandler = () => {
+    const {
+      isGuessed,
+      round,
+    } = this.state;
+
+    if (!isGuessed) {
+      return;
+    }
+
+    if (round === 5) {
+      this.setState({ gameOver: true });
+      return;
+    }
+
+    this.setState({
+      round: round + 1,
+      dataIndex: randomInteger(0, 5),
+      isGuessed: false,
+      clickedIndexBird: null,
+      nextRound: true,
+    });
+  }
+
+  startRound = () => {
+    this.setState({ nextRound: false, })
+  }
+
+  startNewGame = () => {
+    this.setState({
+      round: 0,
+      dataIndex: randomInteger(0, 5),
+      isGuessed: false,
+      clickedIndexBird: null,
+      score: 0,
+      nextRound: false,
+      gameOver: false,
+    })
+  }
+
   render() {
     const {
       round,
       dataIndex,
       isGuessed,
       clickedIndexBird,
+      score,
+      nextRound,
+      gameOver,
     } = this.state;
 
     return (
       <div className="app">
-        <Header />
-        <QuestionBlock
+        <Header
+          score={score}
           round={round}
-          dataIndex={dataIndex}
-          isGuessed={isGuessed}
         />
-        <div className="row mb2">
-          <AnswersBlock
-            round={round}
-            dataIndex={dataIndex}
-            birdClickHandler={this.birdClickHandler}
+        {gameOver
+          ? <GameOver
+            score={score}
+            startNewGame={this.startNewGame}
           />
-          <DescriptionBlock
-            isGuessed={isGuessed}
-            round={round}
-            clickedIndexBird={clickedIndexBird}
-          />
-          <button className="btn">Next</button>
-        </div>
+          : <React.Fragment>
+            <QuestionBlock
+              round={round}
+              dataIndex={dataIndex}
+              isGuessed={isGuessed}
+              nextRound={nextRound}
+            />
+            <div className="row mb2">
+              <AnswersBlock
+                round={round}
+                dataIndex={dataIndex}
+                birdClickHandler={this.birdClickHandler}
+                score={score}
+                updateScore={this.updateScore}
+                nextRound={nextRound}
+                startRound={this.startRound}
+              />
+              <DescriptionBlock
+                isGuessed={isGuessed}
+                round={round}
+                clickedIndexBird={clickedIndexBird}
+              />
+              <button
+                className={isGuessed ? "btn btn-next" : "btn"}
+                onClick={this.nextRoundHandler}
+              >Next</button>
+            </div>
+          </React.Fragment>
+        }
       </div>
     );
   }
