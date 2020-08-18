@@ -1,19 +1,43 @@
 import React from 'react';
+import AudioPlayer from 'react-h5-audio-player';
+import 'react-h5-audio-player/src/styles.scss';
 import birdImg from '../../assets/bird.jpg';
 import BIRDS_DATA from '../../constants/dataBird';
 import './description-block.scss';
 
 export default class DescriptionBlock extends React.Component {
+
+  player = React.createRef();
+
+  componentDidUpdate() {
+    const {
+      isGuessed,
+      isPlayingAudio,
+      stopPlayAudio,
+      isQuestionPlayingAudio,
+      isDescriptionPlayingAudio,
+    } = this.props;
+
+    if(isGuessed && isDescriptionPlayingAudio) {
+      stopPlayAudio('isDescriptionPlayingAudio');
+      this.player.current.audio.current.pause();
+    }
+
+    if (this.player.current && !isDescriptionPlayingAudio) {
+      this.player.current.audio.current.pause();
+    }
+  }
+
   render() {
     const {
       clickedIndexBird,
       round,
-      dataIndex,
+      startPlayAudio,
+      stopPlayAudio,
     } = this.props;
 
-    console.log(clickedIndexBird)
-
     if (clickedIndexBird !== null) {
+      const audioSrc = BIRDS_DATA[round][clickedIndexBird].audio;
       return (
         <div className="col-md-6">
           <div className="bird-card">
@@ -27,9 +51,16 @@ export default class DescriptionBlock extends React.Component {
                   <span>{BIRDS_DATA[round][clickedIndexBird].species}</span>
                 </li>
                 <li className="list-group-item">
-                  <audio controls>
-                    <source src={BIRDS_DATA[round][clickedIndexBird].audio} type="audio/mpeg" />
-                  </audio>
+                  <AudioPlayer
+                    src={audioSrc}
+                    controls
+                    autoPlay={false}
+                    autoPlayAfterSrcChange={false}
+                    customAdditionalControls={[]}
+                    onPlay={() => startPlayAudio('isDescriptionPlayingAudio')}
+                    onPause={() => stopPlayAudio('isDescriptionPlayingAudio')}
+                    ref={this.player}
+                  />
                 </li>
               </ul>
             </div>
@@ -48,9 +79,5 @@ export default class DescriptionBlock extends React.Component {
         </div>
       </div>
     );
-
-
   }
-
-
 };

@@ -34,6 +34,7 @@ export default class AnswerBlock extends React.Component {
       dataIndex,
       birdClickHandler,
       updateScore,
+      stopPlayAudio,
     } = this.props;
 
     const {
@@ -44,6 +45,7 @@ export default class AnswerBlock extends React.Component {
     birdClickHandler(id);
 
     if (correctId) {
+      stopPlayAudio('isDescriptionPlayingAudio');
       return;
     }
 
@@ -52,6 +54,7 @@ export default class AnswerBlock extends React.Component {
       this.setState({ correctId: id });
       this.counter = calculateScore(this.counter, true);
       updateScore(this.counter);
+      stopPlayAudio('isDescriptionPlayingAudio');
       return;
     }
 
@@ -62,6 +65,8 @@ export default class AnswerBlock extends React.Component {
       this.setState({ unCorrectId: newUnCorrectID });
       this.counter = calculateScore(this.counter, false);
     }
+    stopPlayAudio('isDescriptionPlayingAudio');
+
   };
 
   handlePlayAudio = (url) => {
@@ -99,6 +104,7 @@ export default class AnswerBlock extends React.Component {
   render() {
     const {
       round,
+      dataIndex,
     } = this.props;
 
     const {
@@ -106,7 +112,7 @@ export default class AnswerBlock extends React.Component {
       correctId,
     } = this.state;
 
-    console.log(this.counter)
+    console.log(BIRDS_DATA[round][dataIndex].name)
 
     return (
       <div className="col-md-6 answer-block">

@@ -12,10 +12,13 @@ export default class App extends Component {
     round: 0,
     dataIndex: randomInteger(0, 5),
     isGuessed: false,
+    isSuccess: false,
     clickedIndexBird: null,
     score: 0,
     nextRound: false,
     gameOver: false,
+    isQuestionPlayingAudio: false,
+    isDescriptionPlayingAudio: false,
   }
 
   birdClickHandler = (id) => {
@@ -24,7 +27,11 @@ export default class App extends Component {
     } = this.state;
 
     if (id - 1 === dataIndex) {
-      this.setState({ isGuessed: true });
+      this.setState({
+        isGuessed: true,
+        isSuccess: true,
+       });
+      setTimeout(() => this.setState({isGuessed: false}), 0);
     }
     this.setState({ clickedIndexBird: id - 1 })
   }
@@ -36,10 +43,11 @@ export default class App extends Component {
   nextRoundHandler = () => {
     const {
       isGuessed,
+      isSuccess,
       round,
     } = this.state;
 
-    if (!isGuessed) {
+    if (!isSuccess) {
       return;
     }
 
@@ -52,6 +60,7 @@ export default class App extends Component {
       round: round + 1,
       dataIndex: randomInteger(0, 5),
       isGuessed: false,
+      isSuccess: false,
       clickedIndexBird: null,
       nextRound: true,
     });
@@ -66,11 +75,29 @@ export default class App extends Component {
       round: 0,
       dataIndex: randomInteger(0, 5),
       isGuessed: false,
+      isSuccess: false,
       clickedIndexBird: null,
       score: 0,
       nextRound: false,
       gameOver: false,
     })
+  }
+
+  stopPlayAudio = (property) => {
+    if (this.state[property] === true) {
+      this.setState({ [property]: false });
+    }
+  }
+
+  startPlayAudio = (property) => {
+    if (property === 'isQuestionPlayingAudio' && this.state.isDescriptionPlayingAudio === true) {
+      this.setState({ isDescriptionPlayingAudio: false, [property]: true });
+    }
+    if (property === 'isDescriptionPlayingAudio' && this.state.isQuestionPlayingAudio === true) {
+      this.setState({ isQuestionPlayingAudio: false, [property]: true });
+    }
+
+    this.setState({ [property]: true });
   }
 
   render() {
@@ -82,6 +109,10 @@ export default class App extends Component {
       score,
       nextRound,
       gameOver,
+      isPlayingAudio,
+      isDescriptionPlayingAudio,
+      isQuestionPlayingAudio,
+      isSuccess,
     } = this.state;
 
     return (
@@ -101,6 +132,10 @@ export default class App extends Component {
               dataIndex={dataIndex}
               isGuessed={isGuessed}
               nextRound={nextRound}
+              stopPlayAudio={this.stopPlayAudio}
+              startPlayAudio={this.startPlayAudio}
+              isDescriptionPlayingAudio={isDescriptionPlayingAudio}
+              isQuestionPlayingAudio={isQuestionPlayingAudio}
             />
             <div className="row mb2">
               <AnswersBlock
@@ -111,14 +146,20 @@ export default class App extends Component {
                 updateScore={this.updateScore}
                 nextRound={nextRound}
                 startRound={this.startRound}
+                stopPlayAudio={this.stopPlayAudio}
               />
               <DescriptionBlock
                 isGuessed={isGuessed}
                 round={round}
                 clickedIndexBird={clickedIndexBird}
+                stopPlayAudio={this.stopPlayAudio}
+                startPlayAudio={this.startPlayAudio}
+                isPlayingAudio={isPlayingAudio}
+                isQuestionPlayingAudio={isQuestionPlayingAudio}
+                isDescriptionPlayingAudio={isDescriptionPlayingAudio}
               />
               <button
-                className={isGuessed ? "btn btn-next" : "btn"}
+                className={isSuccess ? "btn btn-next" : "btn"}
                 onClick={this.nextRoundHandler}
               >Next</button>
             </div>

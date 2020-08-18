@@ -3,18 +3,31 @@
   display: flex;
   padding: 1rem;
   margin-bottom: 25px;
+  @media (max-width: 663px) {
+    flex-direction: column;
+    align-items: center;
+  }
   img {
     width: 200px;
     height: 155px;
     border-radius: 10px;
     margin: 0;
     object-fit: cover;
+    @media (max-width: 663px) {
+      margin-bottom: 10px;
+    }
   }
-  div {
+  & > div {
     width: calc(100% - 240px);
     margin: 0;
+    @media (max-width: 663px) {
+      width: 100%;
+    }
     .list-group {
       margin-left: 40px;
+      @media (max-width: 663px) {
+        margin-left: 0;
+      }
       .list-group-item {
         background-color: #303030;
         border: 1px solid #555;

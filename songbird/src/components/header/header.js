@@ -32,25 +32,6 @@ export default class Header extends React.Component {
             )
           })
           }
-
-          {/* <li className="question-list-item page-item active">
-            <span>Разминка</span>
-          </li>
-          <li className="question-list-item page-item">
-            <span>Воробьиные</span>
-          </li>
-          <li className="question-list-item page-item">
-            <span>Лесные птицы</span>
-          </li>
-          <li className="question-list-item page-item">
-            <span>Певчие птицы</span>
-          </li>
-          <li className="question-list-item page-item">
-            <span>Хищные птицы</span>
-          </li>
-          <li className="question-list-item page-item">
-            <span>Морские птицы</span>
-          </li> */}
         </ul>
       </div>
     )
