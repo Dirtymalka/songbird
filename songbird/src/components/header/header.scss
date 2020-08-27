@@ -1,0 +1,44 @@
+.header {
+  margin-top: 0.5rem;
+  flex-direction: column;
+  .logo-score {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+    .logo {
+      background-image: url("../../assets/logo.svg");
+      width: 200px;
+      height: 55px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+  .pagination {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0;
+    margin-bottom: 25px;
+    border-radius: 5px;
+    overflow: hidden;
+    li {
+      flex: auto;
+      text-align: center;
+      &.active {
+        span {
+          background-color: #00bc8c;
+        }
+      }
+      span {
+        background-color: #008966;
+        border-color: #007c5d;
+        position: relative;
+        display: block;
+        padding: 0.5rem 0.75rem;
+        margin-left: 0;
+        line-height: 1.25;
+        color: #fff;
+        border: 0 solid transparent;
+      }
+    }
+  }
+}
