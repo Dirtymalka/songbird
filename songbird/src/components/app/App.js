@@ -6,6 +6,7 @@ import DescriptionBlock from '../description-block/description-block';
 import GameOver from '../game-over/game-over';
 import { randomInteger } from '../../utils/utils';
 import './app.scss';
+import '../audio-player/audio-player.scss'
 
 export default class App extends Component {
   state = {
@@ -42,7 +43,6 @@ export default class App extends Component {
 
   nextRoundHandler = () => {
     const {
-      isGuessed,
       isSuccess,
       round,
     } = this.state;
@@ -131,6 +131,7 @@ export default class App extends Component {
               round={round}
               dataIndex={dataIndex}
               isGuessed={isGuessed}
+              isSuccess={isSuccess}
               nextRound={nextRound}
               stopPlayAudio={this.stopPlayAudio}
               startPlayAudio={this.startPlayAudio}

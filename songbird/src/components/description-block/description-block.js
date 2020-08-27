@@ -1,7 +1,6 @@
 import React from 'react';
 import AudioPlayer from 'react-h5-audio-player';
 import 'react-h5-audio-player/src/styles.scss';
-import birdImg from '../../assets/bird.jpg';
 import BIRDS_DATA from '../../constants/dataBird';
 import './description-block.scss';
 
@@ -12,9 +11,7 @@ export default class DescriptionBlock extends React.Component {
   componentDidUpdate() {
     const {
       isGuessed,
-      isPlayingAudio,
       stopPlayAudio,
-      isQuestionPlayingAudio,
       isDescriptionPlayingAudio,
     } = this.props;
 

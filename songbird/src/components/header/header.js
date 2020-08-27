@@ -1,5 +1,4 @@
 import React from 'react';
-import QuestionsList from '../questions-list/questions-list';
 import './header.scss';
 
 export default class Header extends React.Component {

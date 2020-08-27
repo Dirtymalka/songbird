@@ -12,9 +12,7 @@ export default class QuestionBlock extends React.Component {
   componentDidUpdate() {
     const {
       isGuessed,
-      isPlayingAudio,
       stopPlayAudio,
-      isDescriptionPlayingAudio,
       isQuestionPlayingAudio,
     } = this.props;
 
@@ -33,20 +31,20 @@ export default class QuestionBlock extends React.Component {
     const {
       round,
       dataIndex,
-      isGuessed,
       startPlayAudio,
       stopPlayAudio,
+      isSuccess
     } = this.props;
 
     const audioSrc = BIRDS_DATA[round][dataIndex].audio;
 
     return (
       <div className="question-block">
-        <img src={isGuessed ? BIRDS_DATA[round][dataIndex].image : bird} />
+        <img src={isSuccess ? BIRDS_DATA[round][dataIndex].image : bird} />
         <div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
-              <h3>{isGuessed ? BIRDS_DATA[round][dataIndex].name : '******'}</h3>
+              <h3>{isSuccess ? BIRDS_DATA[round][dataIndex].name : '******'}</h3>
             </li>
             <li className="list-group-item">
               <AudioPlayer
